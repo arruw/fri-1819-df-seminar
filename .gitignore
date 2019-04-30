@@ -327,3 +327,7 @@ octave-workspace
 .history
 
 # End of https://www.gitignore.io/api/git,latex,matlab,visualstudiocode
+
+# Ignore copyrighted datasets
+resources/datasets/coverage/**/*.tif
+resources/datasets/coverage/**/*.mat
