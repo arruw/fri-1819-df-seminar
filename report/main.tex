@@ -28,21 +28,42 @@ TODO
 \keywords{TO, DO}
 
 \section{Introduction}
-TODO
+This paper aims to review and summarize a paper about image tamper 
+detection in the field of digital image forensics~\cite{dirik2009image}.
 
-\begin{figure}
-    \centering
-    \includegraphics[trim=0 0 0 0,clip,width=\textwidth]{results/f1_results}
-    \caption{Commonly used Bayer filters}
-    \label{img_4_bayer_filters}
-    \end{figure}
 
-Main paper: \cite{dirik2009image}
 
-CFA interpolation: \cite{cfainterpolation2009}
+In the following chapters we explain CFA, summarize the technique presented 
+in the original paper and present our own implementation in MatLAB.
+Finally, we discuss the results and limitations of our implementation and compare it
+to the results in the original paper.
+
+\section{Color filter array}
+General about filters
+
+\section{CFA Interpolation}
+Bayer filter and different interpolation techniques, other filters X3...
+
+\section{Image tampering categories}
+
+\section{Review of other methods}
+
+
+\section{CFA based features}
+In this section we will review two CFA based features introduced in the paper \cite{dirik2009image}. The first feature (we will call it F1) mainly relies on the estimation of the source digital camera CFA pattern. And the second feature (we will call it F2) relies on the source digital camera sensor noise.
+
+For both of the features we implemented algorithm in MATLAB. First evaluated it on the images included in the referenced paper \cite{dirik2009image} and later on other datasets, including smaller dataset that we prepared.
+
+\subsection{Feature 1: Pattern number estimation}
+This feature is trying to estimate which CFA pattern was used by the source digital camera. To estimate possible used CFA pattern out of , the image is first  is re-interpolated and then
+
+\subsection{Feature 2: CFA based noise analysis}
+
+\section{Experiments}
 
 \section{Conclusions}
 TODO
+shortcomings and problems
 
 \bibliographystyle{abbrv}
 \bibliography{main}
