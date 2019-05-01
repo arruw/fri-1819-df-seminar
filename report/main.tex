@@ -61,11 +61,15 @@ Finally, we discuss the results and limitations of our implementation and compar
 to the results in the original paper.
 
 \section{Color filter array}
-General about filters
+Color filter array is a grid of small color filters put over an image sensor.
+The filters are needed due to the sensor's inability to capture wavelength 
+information and thus cannot distinguish between different colors.
+The CFA filters out specifi
+This enables cameras to capture color information.
 
 \begin{figure}
 \centering
-\includegraphics[trim=175 200 100 205,clip,width=0.4\textwidth]{report/results/4_bayer_filters.jpg}
+\includegraphics[trim=175 200 100 205,clip,width=0.46\textwidth]{report/results/4_bayer_filters.jpg}
 \caption{Commonly used Bayer filters}
 \label{img_4_bayer_filters}
 \end{figure}
@@ -85,6 +89,37 @@ For both of the features we implemented algorithm in MATLAB. First evaluated it 
 
 \subsection{Feature 1: Pattern number estimation}
 This feature is trying to estimate which CFA pattern was used by the source digital camera. To estimate possible used CFA pattern, the image is first (1) re-sampled with each of the CFA patterns and then (2) re-interpolated with the same CFA pattern. After that (3) MSE between the image and its re-interpolated part is calculated. For the image that is not tampered, one of the MSE values are expected to be significantly smaller from the others. If that is not the case, the image may have been post-processed.
+
+\begin{figure}
+    \centering
+
+    \begin{subfigure}{0.23\textwidth}
+        \centering
+        \includegraphics[trim=0 0 0 0,clip,width=\linewidth]{report/results/f1_steps_1.jpg}
+        \caption{Original image}
+    \end{subfigure}
+    \hspace*{\fill}
+    \begin{subfigure}{0.23\textwidth}
+        \centering
+        \includegraphics[trim=0 0 0 0,clip,width=\linewidth]{report/results/f1_steps_1.jpg}
+        \caption{CFA filter}
+    \end{subfigure}
+    
+    \begin{subfigure}{0.23\textwidth}
+        \centering
+        \includegraphics[trim=0 0 0 0,clip,width=\linewidth]{report/results/f1_steps_2.jpg}
+        \caption{Re-sampled image}
+    \end{subfigure}
+    \hspace*{\fill}
+    \begin{subfigure}{0.23\textwidth}
+        \centering
+        \includegraphics[trim=0 0 0 0,clip,width=\linewidth]{report/results/f1_steps_3.jpg}
+        \caption{Re-interpolated image}
+    \end{subfigure}
+    
+    \caption{F1 steps}
+    \label{img_f1_steps}
+\end{figure}
 
 \subsection{Feature 2: CFA based noise analysis}
 
