@@ -1,6 +1,14 @@
 \documentclass{template/acm_proc_article-sp}
 
+\usepackage{graphicx}
 \usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{siunitx}
+\usepackage{csvsimple}
+\usepackage{subcaption}
+\usepackage{amsmath}
 
 \begin{document} 
 
@@ -31,15 +39,34 @@ TODO
 This paper aims to review and summarize a paper about image tamper 
 detection in the field of digital image forensics~\cite{dirik2009image}.
 
+The paper classifies image tampering into three groups: 
+\begin{description}
+    \item[Targeted Tamper Detection] Which focus on detecting specific groups of 
+    tampering such as re-compression, cloning, resizing, etc. 
+    \item[Universal Tamper Detection] Which can only determine if the image
+    was tampered with or not.
+    \item[Localized Tamper Detection] Which can identify parts of the image 
+    that were tampered with.
+\end{description}
 
+The paper describes a Color Filter Array (CFA) demosaicing based tamper detection.
+The method works due to the fact that image tampering usually alters CFA demosaicing
+artifacts in a way that can be detected. 
 
 In the following chapters we explain CFA, summarize the technique presented 
-in the original paper and present our own implementation in MatLAB.
+in the original paper and present our own implementation in MATLAB.
 Finally, we discuss the results and limitations of our implementation and compare it
 to the results in the original paper.
 
 \section{Color filter array}
 General about filters
+
+% \begin{figure}
+% \centering
+% \includegraphics[trim=0 0 0 0,clip,width=\textwidth]{results/f1_results}
+% \caption{Commonly used Bayer filters}
+% \label{img_4_bayer_filters}
+% \end{figure}
 
 \section{CFA Interpolation}
 Bayer filter and different interpolation techniques, other filters X3...
