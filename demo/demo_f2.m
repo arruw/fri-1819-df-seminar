@@ -1,4 +1,4 @@
-I = imread('../resources/datasets/ours/snote3_1t.jpg');
+I = imread('../resources/datasets/ours/snote3_2t.jpg');
 
 W = 96;     % sliding window size
 S = 6;      % sliding window step W/S
