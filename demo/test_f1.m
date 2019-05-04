@@ -1,5 +1,6 @@
-auth = dir("/home/matjazmav/Downloads/personal_columbia_downsized_jpeg/auth_jpeg_images_experiment/*.jpg");
-temp = dir("/home/matjazmav/Downloads/columbia-prcg-datasets/prcg_images/*.jpg");
+base_dir = "/home/matjazmav/Downloads/MICC-F220";
+auth = dir(base_dir+"/*scale.jpg");
+temp = dir(base_dir+"/*tamp*.jpg");
 
 figure(1); clf; hold on;
 
@@ -11,7 +12,7 @@ for i = 1:length(auth)
     I = imread(fullfile(auth(i).folder, auth(i).name));
     f1 = extract_f1(I, W, eps);
     
-    plot(j, f1, 'b.');
+    plot(j, f1, 'b.','MarkerSize',20);
     drawnow;
     
     j = j+1;
@@ -21,7 +22,7 @@ for i = 1:length(temp)
     I = imread(fullfile(temp(i).folder, temp(i).name));
     f1 = extract_f1(I, W, eps);
     
-    plot(j, f1, 'rx');
+    plot(j, f1, 'rx','MarkerSize',20);
     drawnow;
     
     j = j+1;
