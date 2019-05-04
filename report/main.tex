@@ -10,6 +10,12 @@
 \usepackage{csvsimple}
 \usepackage{subcaption}
 \usepackage{amsmath}
+\usepackage{float}
+
+\usepackage{amssymb}
+\usepackage{pifont}
+\newcommand{\markx}{\ding{53}}
+\newcommand{\marko}{\ding{108}}
 
 \begin{document} 
 
@@ -41,7 +47,7 @@ are discussed.
 
 \section{Introduction}
 This paper aims to review and summarize a paper about image tamper 
-detection in the field of digital image forensics~\cite{dirik2009image}.
+detection in the field of digital image forensics~\cite{dirik2009image} (later referred as referenced paper).
 
 The paper classifies image tampering into three groups: 
 \begin{description}
@@ -59,14 +65,14 @@ The method works due to the fact that image tampering usually alters CFA demosai
 artifacts in a way that can be detected and can thus detect a wide range of tampering
 techniques. 
 
-In the following chapters we explain CFA, summarize the technique presented 
-in the original paper and present our own implementation in MATLAB.
+In the following sections we explain CFA, summarize the technique presented 
+in the referenced paper and present our own implementation in MATLAB.
 Finally, we discuss the results and limitations of our implementation and compare it
-to the results in the original paper.
+to the results in the referenced paper.
 
 \section{Color filter array}
 Color filter array is a grid of small color 
-filters put over an image sensor~\cite{cfawiki}.
+filters put over an image sensor.
 The filters are needed due to the sensor's inability to capture wavelength 
 information and thus cannot distinguish between different colors.
 The CFA filters out specific colors before the light arrives at the image sensor.
@@ -81,9 +87,9 @@ Other types of filters include a RGBE filter which also uses an emerald filter, 
 filter which uses one cyan, two yellow and one magenta filter, a RGBW filter which also uses a white filter, etc.
 
 The process of interpolating different sets of color information into a single image 
-is called demosaicing~\cite{demowiki}.
+is called demosaicing.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 \includegraphics[trim=175 200 100 205,clip,width=0.46\textwidth]{report/results/4_bayer_filters.jpg}
 \caption{Commonly used Bayer filters}
@@ -91,21 +97,23 @@ is called demosaicing~\cite{demowiki}.
 \end{figure}
 
 \section{CFA Interpolation}
-CFA interpolation or demosaicing is the process of building a singe image from
-multiple color sets~\cite{demowiki}. 
+CFA interpolation or demosaicing \cite{cfainterpolation2009,gunturk2005demosaicking} is the process of building a singe image from
+multiple color sets. 
 This can be achieved using simple interpolation techniques such as 
-nearest-neighbor interpolation~\cite{nnwiki}, bilinear interpolation~\cite{bilwiki}, 
-bicubic interpolation~\cite{bicwiki}, spline interpolation~\cite{splinewiki}, etc.
+nearest-neighbor interpolation, bilinear interpolation, 
+bicubic interpolation, spline interpolation, etc.
 
 Advanced demosaicing algorithms using pixel correlation such as 
 variable number of gradients, pixel grouping, adaptive homogeneity-directed
 are out of scope of this paper.
 
 Bilinear interpolation is used in this paper as it was also used in
-the original paper. The original paper also states result do not
+the referenced paper. The referenced paper also states result do not
 differ using bicubic interpolation.
 
+In our MATLAB implementation we used interpolation implementation by S. Leszek \cite{cfainterpolation2009}.
 
+\newpage
 \section{CFA based features}
 In this section we will review two CFA based features introduced in the paper \cite{dirik2009image}. The first feature (referred to as  $F_1$) mainly relies on the estimation of the source digital camera CFA pattern. And the second feature (referred to as $F_2$) relies on the source digital camera sensor noise.
 
@@ -118,9 +126,9 @@ This feature is trying to estimate which CFA pattern was used by the source digi
 
 To estimate possible used CFA pattern, the image is first re-sampled with each of the CFA patterns (usually only 4 most commonly used that are illustrated in figure \ref{img_4_bayer_filters}) and then re-interpolated with the same CFA pattern. This steps are illustrated in figure \ref{img_f1_steps}. After that (3) MSE between the image and its re-interpolated part is calculated. For the image that is not tampered, one of the MSE values are expected to be significantly smaller from the others. If that is not the case, the image may have been post-processed.
 
-We followed steps that are introduced in referenced paper \cite{dirik2009image} and implemented MATLAB algorithm that estimates $F_1$ feature. Unfortunately we ware not able to reproduced the results that are described in there.
+We followed steps that are introduced in referenced paper and implemented MATLAB algorithm that estimates $F_1$ feature. Unfortunately we ware not able to reproduced the results that are described in there.
 
-\begin{figure}
+\begin{figure}[H]
 \centering
 
 \begin{subfigure}{0.23\textwidth}
@@ -146,6 +154,7 @@ We followed steps that are introduced in referenced paper \cite{dirik2009image} 
 \caption{Steps taken in $F_1$ feature estimation. Original image (a) and selected CFA filter (b) are used to re-sample image. The re-sampled image (c) is then re-interpolated with the selected CFA filter (b). Final result is shown in (d).}
 \label{img_f1_steps}
 \end{figure}
+\vfill\null
 
 \subsection{Feature 2: CFA based noise analysis}
 \label{sec_f2}
@@ -198,12 +207,17 @@ With slight modification of upper implementation, lines 13 - 23 ware processed w
 \section{Experiments}
 We evaluated both of the features on dataset used in referenced paper \cite{dirik2009image}, copy-move dataset MICC-F220 dataset \cite{amerini2011sift} that contains 110 pristine and 110 tampered images and also on small dataset that we prepared\footnote{Available on the GitHub repository in folder \textit{resources/datasets/ours}.}.
 
+Because of mostly unsuccessful results we also evaluated our implementations on the UCID dataset \cite{schaefer2003ucid}. UCID dataset contain uncompressed color images in TIFF image format, taken by Minolta
+Dimage 5 digital colour camera (uses G - R - G - B CFA). Since referenced paper mentions that this two purposed techniques are strongly sensitive on used CFA, JPEG compression and resizing, we tried to tamper raw images with copy-move technique without resizing and using different compression levels saving into JPEG and PNG image format. Unfortunately we ware unable to produce tampered image that could be detected with our implementation.
+
 \subsection{Local tampering detection}
 
-As we described in section \ref{sec_f2}, we ware able to successfully replicate the local tampering detection on the images used in the referenced paper \cite{dirik2009image}. The results of the our implementation are illustrated on the figure \ref{img_f2_localization}. Since our results are very similar to the results illustrated in the referenced paper we assume that our implementation is correct. 
+As we described in section \ref{sec_f2}, we ware able to successfully replicate the local tampering detection on the images used in the referenced paper. The results of the our implementation are illustrated on the figure \ref{img_f2_localization}. Since our results are very similar to the results illustrated in the referenced paper we assume that our implementation is correct. 
 
 Unfortunately we ware unable to successfully localize tampered regions on other datasets. 
-\begin{figure}
+
+
+\begin{figure}[H]
 \centering
 
 \begin{subfigure}{0.46\textwidth}
@@ -232,13 +246,30 @@ Unfortunately we ware unable to successfully localize tampered regions on other 
 
 \subsection{Universal tampering detection}
 
-TODO: we failed here + plot results on dataset
+Our implementation is not able to classify between pristine and tampered images. We tested bot of the features on MICC-F222 dataset and illustrated extracted feature values in figure \ref{img_f1_f2_universal}.
+
+\begin{figure}[H]
+\centering
+
+\begin{subfigure}{0.46\textwidth}
+    \includegraphics[trim=0 0 0 0,clip,width=\linewidth]{report/results/f1_results.jpg}
+    \caption{Feature 1}
+\end{subfigure}
+
+\begin{subfigure}{0.46\textwidth}
+    \includegraphics[trim=0 0 0 0,clip,width=\linewidth]{report/results/f2_results.jpg}
+    \caption{Feature 2}
+\end{subfigure}
+
+\caption{Universal tampering detection with $F_1$ and $F_2$ features on MICC-F220 dataset.
+\newline{\color{blue}\marko} pristine image \newline{\color{red}\markx} tampered image (copy-move)}
+\label{img_f1_f2_universal}
+\end{figure}
 
 \section{Conclusions}
 As seen in the results we were able to reproduce the results achieved in the 
-original paper. However we were not able to detect tampering on other datasets.
-This could be a result of ...
-We were however successful in presenting and summarizing the techniques used.
+referenced paper. However we were not able to detect tampering on other datasets.
+This could be a result of improper post-processing done on the tested datasets such as: (1) use of an improper tampering technique (we mostly used copy-move, some of examples also included edge blurring and resizing), (2) use of too advanced image editing tool (we used Gimp and Adobe Photoshop), or (3) use of an improper compression levels and image formats. We were however successful in presenting and summarizing the techniques used.
 
 \bibliographystyle{abbrv}
 \bibliography{main}
