@@ -1,4 +1,13 @@
-% I = imread('../resources/datasets/base/2t.jpg');
+% I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp3.tif');
+% I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp3.png');
+% I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp3_downsampled.png');
+% I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp3_q100.jpg');
+% I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp3_q99.jpg');
+% I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp3_q98.jpg');
+% I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp3_q97.jpg');
+% I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp1.tif');
+I = imread('resources/datasets/ours/nikon_d850/FRO_1390_tamp4.tif');
+
 
 W = 96;     % sliding window size
 S = 6;      % sliding window step W/S
