@@ -39,7 +39,7 @@ Klemen Jesenovec\\
 \begin{abstract}
 This paper reviews and summarizes research done on image tampering detection
 using a color filter array demosaicing technique. The algorithm and it's features are
-explained and implemented in MATLAB. The algorith is tested on sample data and results
+explained and implemented in MATLAB. The algorithm is tested on sample data and results
 are discussed.
 \end{abstract}
 
@@ -111,22 +111,22 @@ Bilinear interpolation is used in this paper as it was also used in
 the referenced paper. The referenced paper also states result do not
 differ using bicubic interpolation.
 
-In our MATLAB implementation we used interpolation implementation by S. Leszek \cite{cfainterpolation2009}.
+In our MATLAB implementation we used interpolation implementation by S. Leszek. \cite{cfainterpolation2009}.
 
 \newpage
 \section{CFA based features}
-In this section we will review two CFA based features introduced in the paper \cite{dirik2009image}. The first feature (referred to as  $F_1$) mainly relies on the estimation of the source digital camera CFA pattern. And the second feature (referred to as $F_2$) relies on the source digital camera sensor noise.
+In this section we will review two CFA based features introduced in the paper \cite{dirik2009image}. The first feature (referred to as  $F_1$) mainly relies on the estimation of the source digital camera CFA pattern. The second feature (referred to as $F_2$) relies on the source digital camera sensor noise.
 
 Both of the features can be used in universal tampering detection and also when applied with sliding window in local tampering detection.
 
 For both of the features we implemented algorithm in MATLAB. All code is available on the GitHub repository\\\textit{matjazmav/fri-1819-df-seminar}\footnote{\url{https://github.com/matjazmav/fri-1819-df-seminar}}.
 
 \subsection{Feature 1: Pattern number estimation}
-This feature is trying to estimate which CFA pattern was used by the source digital camera.
+This feature tries to estimate which CFA pattern was used by the source digital camera.
 
 To estimate possible used CFA pattern, the image is first re-sampled with each of the CFA patterns (usually only 4 most commonly used that are illustrated in figure \ref{img_4_bayer_filters}) and then re-interpolated with the same CFA pattern. This steps are illustrated in figure \ref{img_f1_steps}. After that (3) MSE between the image and its re-interpolated part is calculated. For the image that is not tampered, one of the MSE values are expected to be significantly smaller from the others. If that is not the case, the image may have been post-processed.
 
-We followed steps that are introduced in referenced paper and implemented MATLAB algorithm that estimates $F_1$ feature. Unfortunately we ware not able to reproduced the results that are described in there.
+We followed steps that are introduced in referenced paper and implemented MATLAB algorithm that estimates $F_1$ feature. Unfortunately we ware not able to reproduce the results that are described in there.
 
 \begin{figure}[H]
 \centering
